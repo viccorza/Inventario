@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Bere
- *
- */
-package db;
