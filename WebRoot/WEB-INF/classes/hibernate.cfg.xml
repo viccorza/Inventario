@@ -20,12 +20,16 @@
 		<property name="myeclipse.connection.profile">
 			Inventario
 		</property>
+		<property name="hibernate.hbm2ddl.auto">
+		create
+		</property>
 		<property name="show_sql">true</property>
-		<mapping resource="./Usuario.hbm.xml" />
-		<mapping resource="./Estado.hbm.xml" />
-		<mapping resource="./Rol.hbm.xml" />
-		<mapping resource="./Reparaciones.hbm.xml" />
-		<mapping resource="./Equipos.hbm.xml" />
+		<mapping resource="Usuario.hbm.xml" />
+		<mapping resource="Estado.hbm.xml" />
+		<mapping resource="Rol.hbm.xml" />
+		<mapping resource="Reparaciones.hbm.xml" />
+		<mapping resource="Equipos.hbm.xml" />
+		
 
 	</session-factory>
 

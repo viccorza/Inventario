@@ -2,6 +2,8 @@
     <wb-module deploy-name="Inventario">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test/java"/>
         <property name="context-root" value="Inventario"/>
         <property name="java-output-path" value="/Inventario/WebRoot/WEB-INF/classes"/>
     </wb-module>

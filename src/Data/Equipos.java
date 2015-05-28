@@ -18,7 +18,7 @@ public class Equipos implements java.io.Serializable {
 	private String numSerie;
 	private String modelo;
 	private String marca;
-	private String ubicación;
+	private String ubicacion;
 	private String tipo;
 	private Set reparacioneses = new HashSet(0);
 
@@ -30,7 +30,7 @@ public class Equipos implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Equipos(Integer idEquipo, Estado estado, Usuario usuario,
-			String numSerie, String modelo, String marca, String ubicación,
+			String numSerie, String modelo, String marca, String ubicacion,
 			String tipo) {
 		this.idEquipo = idEquipo;
 		this.estado = estado;
@@ -38,13 +38,13 @@ public class Equipos implements java.io.Serializable {
 		this.numSerie = numSerie;
 		this.modelo = modelo;
 		this.marca = marca;
-		this.ubicación = ubicación;
+		this.ubicacion = ubicacion;
 		this.tipo = tipo;
 	}
 
 	/** full constructor */
 	public Equipos(Integer idEquipo, Estado estado, Usuario usuario,
-			String numSerie, String modelo, String marca, String ubicación,
+			String numSerie, String modelo, String marca, String ubicacion,
 			String tipo, Set reparacioneses) {
 		this.idEquipo = idEquipo;
 		this.estado = estado;
@@ -52,7 +52,7 @@ public class Equipos implements java.io.Serializable {
 		this.numSerie = numSerie;
 		this.modelo = modelo;
 		this.marca = marca;
-		this.ubicación = ubicación;
+		this.ubicacion = ubicacion;
 		this.tipo = tipo;
 		this.reparacioneses = reparacioneses;
 	}
@@ -107,12 +107,12 @@ public class Equipos implements java.io.Serializable {
 		this.marca = marca;
 	}
 
-	public String getUbicación() {
-		return this.ubicación;
+	public String getUbicacion() {
+		return this.ubicacion;
 	}
 
-	public void setUbicación(String ubicación) {
-		this.ubicación = ubicación;
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 
 	public String getTipo() {

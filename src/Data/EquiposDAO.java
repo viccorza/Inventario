@@ -26,7 +26,7 @@ public class EquiposDAO extends BaseHibernateDAO {
 	public static final String NUM_SERIE = "numSerie";
 	public static final String MODELO = "modelo";
 	public static final String MARCA = "marca";
-	public static final String UBICACIÓN = "ubicación";
+	public static final String UBICACION = "ubicacion";
 	public static final String TIPO = "tipo";
 
 	public void save(Equipos transientInstance) {
@@ -103,8 +103,8 @@ public class EquiposDAO extends BaseHibernateDAO {
 		return findByProperty(MARCA, marca);
 	}
 
-	public List findByUbicación(Object ubicación) {
-		return findByProperty(UBICACIÓN, ubicación);
+	public List findByUbicacion(Object ubicacion) {
+		return findByProperty(UBICACION, ubicacion);
 	}
 
 	public List findByTipo(Object tipo) {
