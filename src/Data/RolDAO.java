@@ -96,7 +96,7 @@ public class RolDAO extends BaseHibernateDAO {
 		return findByProperty(DESCRIPCION, descripcion);
 	}
 
-	public List findAll() {
+	public List<Rol> findAll() {
 		log.debug("finding all Rol instances");
 		try {
 			String queryString = "from Rol";
