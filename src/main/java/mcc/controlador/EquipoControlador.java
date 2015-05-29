@@ -31,4 +31,28 @@ public class EquipoControlador {
 		return carpetaEquipo+"/gestionarEquipo";
 	}
 	
+	@RequestMapping("registrarEquipo")
+	public String registrarEquipo(){
+		log.debug("Iniciando pagina de registrarEquipo");
+		return carpetaEquipo+"/registrarEquipo";
+	}
+	
+	@RequestMapping("eliminarEquipo")
+	public String eliminarEquipo(){
+		log.debug("Iniciando pagina de eliminarEquipo");
+		return carpetaEquipo+"/eliminarEquipo";
+	}
+	
+	@RequestMapping("consultarEquipo")
+	public String consultarEquipo(){
+		log.debug("Iniciando pagina de consultarEquipo");
+		return carpetaEquipo+"/consultarEquipo";
+	}
+	
+	@RequestMapping("actualizarEquipo")
+	public String actualizarEquipo(){
+		log.debug("Iniciando pagina de actualizarEquipos");
+		return carpetaEquipo+"/actualizarEquipo";
+	}
+	
 }

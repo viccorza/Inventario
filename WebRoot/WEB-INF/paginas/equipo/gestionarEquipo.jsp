@@ -14,12 +14,20 @@
 <%@include file="../plantilla/encabezado.html" %> 
 <br />
 <!-- inicia va el contenido -->
+ <div class="jumbotron">
+      <div class="container">
+        <h1 class="text-center">Gestionar Equipo</h1>
+      
+      </div>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-sm-3 col-md-3">
             <div class="post">
                 <div class="post-img-content">
+                <a href=" <c:url value="/equipo/registrarEquipo.html" />" >
                     <img src="http://placehold.it/460x250/e67e22/ffffff&text=REGISTRAR EQUIPO" class="img-responsive" />
+                    </a>
                 </div>
                 
             </div>
@@ -27,16 +35,18 @@
         <div class="col-sm-3 col-md-3">
             <div class="post">
                 <div class="post-img-content">
+                   <a href=" <c:url value="/equipo/eliminarEquipo.html" />" >
                     <img src="http://placehold.it/460x250/2980b9/ffffff&text=ELIMINAR EQUIPO" class="img-responsive" />
-                   
+                   </a>
                 </div>
             </div>
         </div>
         <div class="col-sm-3 col-md-3">
             <div class="post">
                 <div class="post-img-content">
+                   <a href=" <c:url value="/equipo/consultarEquipo.html" />" >
                     <img src="http://placehold.it/460x250/47A447/ffffff&text=CONSULTAR EQUIPO" class="img-responsive" />
-                    
+                  </a>  
                 </div>
             
             </div>
@@ -44,14 +54,22 @@
           <div class="col-sm-3 col-md-3">
             <div class="post">
                 <div class="post-img-content">
-                    <img src="http://placehold.it/460x250/e67e22/ffffff&text=ACTUALIZAR EQUIPO" class="img-responsive" />
-                    
+                    <a href=" <c:url value="/equipo/actualizarEquipo.html" />" >
+                   	 <img src="http://placehold.it/460x250/e67e22/ffffff&text=ACTUALIZAR EQUIPO" class="img-responsive" />
+                    </a>
                 </div>
             
             </div>
         </div>
     </div>
 </div>
+<br />
+<div class="container text-center">
+
+<h2> <span class="label label-info">Elige una opción</span></h2>
+
+</div>
+
 
 <!--  finaliza el contenido -->
 <%@include file="../plantilla/piepagina.html" %> 
