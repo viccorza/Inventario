@@ -7,6 +7,8 @@ import mcc.beans.Usuario;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -51,7 +53,7 @@ public class UsuarioDAO extends BaseHibernateDAO {
 	public Usuario findById(java.lang.Integer id) {
 		log.debug("getting Usuario instance with id: " + id);
 		try {
-			Usuario instance = (Usuario) getSession().get("mcc.data.Usuario",
+			Usuario instance = (Usuario) getSession().get("mcc.beans.Usuario",
 					id);
 			return instance;
 		} catch (RuntimeException re) {
@@ -63,7 +65,7 @@ public class UsuarioDAO extends BaseHibernateDAO {
 	public List findByExample(Usuario instance) {
 		log.debug("finding Usuario instance by example");
 		try {
-			List results = getSession().createCriteria("mcc.data.Usuario")
+			List results = getSession().createCriteria("mcc.beans.Usuario")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -124,14 +126,13 @@ public class UsuarioDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public void attachClean(Usuario instance) {
-		log.debug("attaching clean Usuario instance");
-		try {
-			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
+	 /**
+     * Obtiene toda la lista de usuarios
+     * @return lista de usuarios
+     */
+	@SuppressWarnings("unchecked")
+    public List<Usuario> buscarUsuarioPorApellido(String apellido) {
+    	return getSession().createCriteria(Usuario.class)
+				.add(Restrictions.ilike("apellido",apellido,MatchMode.ANYWHERE)).list();
+  }
 }

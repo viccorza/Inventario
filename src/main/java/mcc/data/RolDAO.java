@@ -51,7 +51,7 @@ public class RolDAO extends BaseHibernateDAO {
 	public Rol findById(java.lang.Integer id) {
 		log.debug("getting Rol instance with id: " + id);
 		try {
-			Rol instance = (Rol) getSession().get("mcc.data.Rol", id);
+			Rol instance = (Rol) getSession().get("mcc.beans.Rol", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -62,7 +62,7 @@ public class RolDAO extends BaseHibernateDAO {
 	public List findByExample(Rol instance) {
 		log.debug("finding Rol instance by example");
 		try {
-			List results = getSession().createCriteria("mcc.data.Rol")
+			List results = getSession().createCriteria("mcc.beans.Rol")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

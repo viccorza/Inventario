@@ -51,7 +51,7 @@ public class EstadoDAO extends BaseHibernateDAO {
 	public Estado findById(java.lang.Integer id) {
 		log.debug("getting Estado instance with id: " + id);
 		try {
-			Estado instance = (Estado) getSession().get("mcc.data.Estado", id);
+			Estado instance = (Estado) getSession().get("mcc.beans.Estado", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -62,7 +62,7 @@ public class EstadoDAO extends BaseHibernateDAO {
 	public List findByExample(Estado instance) {
 		log.debug("finding Estado instance by example");
 		try {
-			List results = getSession().createCriteria("mcc.data.Estado")
+			List results = getSession().createCriteria("mcc.beans.Estado")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -88,7 +88,8 @@ public class EstadoDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findAll() {
+	@SuppressWarnings("unchecked")
+	public List<Estado> findAll() {
 		log.debug("finding all Estado instances");
 		try {
 			String queryString = "from Estado";
