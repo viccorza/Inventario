@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see mcc.beans.Usuario
  * @author MyEclipse Persistence Tools
  */
+@Repository
 public class UsuarioDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(UsuarioDAO.class);
 

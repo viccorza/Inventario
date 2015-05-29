@@ -1,6 +1,9 @@
 package mcc.controlador;
 
 import mcc.data.RolDAO;
+import mcc.negocio.EquipoNegocio;
+import mcc.negocio.ReparacionNegocio;
+import mcc.negocio.UsuarioNegocio;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +27,22 @@ public class UsuarioControlador {
 	private static final Logger log = Logger.getLogger(UsuarioControlador.class);
 	
 	@Autowired
-	private RolDAO rolDAO;
+	ReparacionNegocio reparacionNegocio;
+
+	@Autowired
+	UsuarioNegocio usuarioNegocio;
+	
+	@Autowired
+	EquipoNegocio equipoNegocio;
+	private static final String carpetaUsuario="usuario";
+	
 	
 	
 	
 	@RequestMapping("listaUsuarios")
 	public ModelAndView listarUsuarios(){
 		log.debug("Entrando a listarUsuarios");
-		return new ModelAndView("usuario/listaUsuario","listaRoles",rolDAO.findAll());
+		return new ModelAndView(carpetaUsuario+"/listaUsuario","param",1);
 	}
 	
 	

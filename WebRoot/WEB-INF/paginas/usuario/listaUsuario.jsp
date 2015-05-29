@@ -7,18 +7,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Lista de usuarios</title>
+<%@include file="../plantilla/estilosCSS.html" %> 
 </head>
 <body>
-	<table>
-	<c:forEach items="${listaRoles}" var="rol" varStatus="status">
-		<tr>
-		<td>${rol.nombreRol}
-		</td>
-		<td>${rol.descripcion}
-		</td>
-		</tr>
-	</c:forEach>
-	</table>
+<%@include file="../plantilla/encabezado.html" %> 
+<!-- inicia va el contenido -->
+
+<!--  finaliza el contenido -->
+<%@include file="../plantilla/piepagina.html" %> 
 </body>
 </html>

@@ -10,16 +10,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Clase que realizar el negocio
- * para los usuarios
- * @author
- *
- */
 @Service
-public class UsuarioNegocio {
+public class ReparacionNegocio {
 
-
+	private static final Logger log = Logger.getLogger(ReparacionNegocio.class);
+	
 	@Autowired
 	private EquiposDAO equiposDAO;
 	@Autowired
@@ -32,5 +27,4 @@ public class UsuarioNegocio {
 	private UsuarioDAO usuarioDAO;
 	
 	
-	private static final Logger log = Logger.getLogger(UsuarioNegocio.class);
 }
