@@ -12,7 +12,18 @@
 </head>
 <body>
 <%@include file="../plantilla/encabezado.html" %> 
+<br />
 <!-- inicia va el contenido -->
+ <div class="jumbotron">
+      <div class="container">
+        <h1 class="text-center">Actualizar Equipo</h1>
+      
+      </div>
+    </div>
+
+<br />
+
+
 
 <!--  finaliza el contenido -->
 <%@include file="../plantilla/piepagina.html" %> 
