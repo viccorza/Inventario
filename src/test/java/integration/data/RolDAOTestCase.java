@@ -25,7 +25,7 @@ public class RolDAOTestCase {
 	/**
 	 * Se espera que sea exitoso
 	 */
-	@Test
+	//@Test
 	public void saveSucces(){
 		Rol rol = new Rol();
 		rol.setNombreRol("CAPTURISTA");
@@ -40,7 +40,7 @@ public class RolDAOTestCase {
 	 * 
 	 */
 	
-	@Test(expected=Exception.class)
+	//@Test(expected=Exception.class)
 	public void saveFail(){
 		Rol rol = new Rol();
 		rol.setNombreRol("CAPTURISTA");
@@ -54,6 +54,14 @@ public class RolDAOTestCase {
 	public void findAllTest(){
 		List<Rol> rolDAOList = rolDAO.findAll();
 		assertNotNull(rolDAOList);
+		
+	}
+	
+	
+	@Test
+	public void findById(){
+		Rol rol = rolDAO.findById(3);
+		assertNotNull(rol);
 		
 	}
 }

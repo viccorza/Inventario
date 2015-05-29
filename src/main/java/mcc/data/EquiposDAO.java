@@ -51,7 +51,7 @@ public class EquiposDAO extends BaseHibernateDAO {
 	public Equipos findById(java.lang.Integer id) {
 		log.debug("getting Equipos instance with id: " + id);
 		try {
-			Equipos instance = (Equipos) getSession().get("mcc.data.Equipos",
+			Equipos instance = (Equipos) getSession().get("mcc.beans.Equipos",
 					id);
 			return instance;
 		} catch (RuntimeException re) {
@@ -63,7 +63,7 @@ public class EquiposDAO extends BaseHibernateDAO {
 	public List findByExample(Equipos instance) {
 		log.debug("finding Equipos instance by example");
 		try {
-			List results = getSession().createCriteria("mcc.data.Equipos")
+			List results = getSession().createCriteria("mcc.beans.Equipos")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

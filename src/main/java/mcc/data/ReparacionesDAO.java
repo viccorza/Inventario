@@ -53,7 +53,7 @@ public class ReparacionesDAO extends BaseHibernateDAO {
 		log.debug("getting Reparaciones instance with id: " + id);
 		try {
 			Reparaciones instance = (Reparaciones) getSession().get(
-					"mcc.data.Reparaciones", id);
+					"mcc.beans.Reparaciones", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,7 +64,7 @@ public class ReparacionesDAO extends BaseHibernateDAO {
 	public List findByExample(Reparaciones instance) {
 		log.debug("finding Reparaciones instance by example");
 		try {
-			List results = getSession().createCriteria("mcc.data.Reparaciones")
+			List results = getSession().createCriteria("mcc.beans.Reparaciones")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

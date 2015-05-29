@@ -11,6 +11,14 @@ public class Equipos implements java.io.Serializable {
 
 	// Fields
 
+	@Override
+	public String toString() {
+		return "Equipos [idEquipo=" + idEquipo + ", estado=" + estado
+				+ ", usuario=" + usuario + ", numSerie=" + numSerie
+				+ ", modelo=" + modelo + ", marca=" + marca + ", ubicación="
+				+ ubicación + ", tipo=" + tipo + "]";
+	}
+
 	private Integer idEquipo;
 	private Estado estado;
 	private Usuario usuario;
@@ -21,6 +29,13 @@ public class Equipos implements java.io.Serializable {
 	private String tipo;
 	private Set reparacioneses = new HashSet(0);
 
+	public String getUbicacionString(){
+		return this.ubicación;
+	}
+	public void setUbicacionString(String ubicacionString){
+		this.ubicación=ubicacionString;
+	}
+	
 	// Constructors
 
 	/** default constructor */

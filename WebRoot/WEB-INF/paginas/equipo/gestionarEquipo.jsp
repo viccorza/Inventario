@@ -14,6 +14,11 @@
 <%@include file="../plantilla/encabezado.html" %> 
 <br />
 <!-- inicia va el contenido -->
+<c:if test="${msg!=null}">
+<div class="container" >
+<div class="alert alert-success" role="alert">El registro se ha guardado con éxito</div>
+</div>				
+</c:if>
  <div class="jumbotron">
       <div class="container">
         <h1 class="text-center">Gestionar Equipo</h1>

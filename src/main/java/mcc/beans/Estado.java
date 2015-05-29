@@ -11,6 +11,12 @@ public class Estado implements java.io.Serializable {
 
 	// Fields
 
+	@Override
+	public String toString() {
+		return "Estado [idEstado=" + idEstado + ", estado=" + estado
+				+ ", descripcion=" + descripcion + "]";
+	}
+
 	private Integer idEstado;
 	private String estado;
 	private String descripcion;
