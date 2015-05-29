@@ -31,7 +31,7 @@ public class UsuarioControlador {
 	@RequestMapping("listaUsuarios")
 	public ModelAndView listarUsuarios(){
 		log.debug("Entrando a listarUsuarios");
-		return new ModelAndView("usuario/listaUsuario","listaRoles",rolDAO.findAll());
+		return new ModelAndView("usuario/listaUsuario","param",1);
 	}
 	
 	
