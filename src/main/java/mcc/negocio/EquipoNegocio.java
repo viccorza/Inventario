@@ -66,14 +66,84 @@ public class EquipoNegocio {
 		return usuarioAutoCompleteList ;
 	}
 	
-	public void confirmaRegistroEquipo(EquipoForm equipoForm){
+	/**
+	 * Inserta la informacion de un equipo
+	 * @param equipoForm contenedor de informacion de equipo
+	 * @return instancia ya insertada con el id asignado
+	 */
+	public Equipos confirmaRegistroEquipo(EquipoForm equipoForm){
 		Usuario usuario = usuarioDAO.findById(equipoForm.getIdNombreUsuarioResponsable());
-		Estado estado = estadoDAO.findById(Integer.parseInt(equipoForm.getEquipos().getEstado().getEstado()));
+		Estado estado = estadoDAO.findById(equipoForm.getEquipos().getEstado().getIdEstado());
 		Equipos equipo =  equipoForm.getEquipos();
 		equipo.setUsuario(usuario);
 		equipo.setEstado(estado);
 		equiposDAO.save(equipo);
+		return equipo;
+	}
+	/**
+	 * Busca un equipo por id
+	 * @param equipoForm contenedor de informacion del equipo
+	 * @param idEquipo id del equipo a buscar
+	 * @return
+	 */
+	public EquipoForm buscarEquipoPorID(EquipoForm equipoForm,int idEquipo){
+		Equipos equipos = equiposDAO.findById(idEquipo);
+
+		if(equipos==null){
+			equipoForm.setEstatusBusqueda("NOTFOUND");
+
+		}
+		else
+		{
+			List<Estado> estadoList = estadoDAO.findAll();
+			for(Estado estado:estadoList){
+				equipoForm.getEstadoMap().put(estado.getIdEstado(),estado.getEstado());
+			}
+			
+			equipoForm.setEquipos(equipos);
+		}
+		return equipoForm;
+	}
+
+	/**
+	 * Confirma el borrado de un equipo
+	 * en a base de datos
+	 * @param equipoForm
+	 */
+	public void confirmaBorradoEquipo(EquipoForm equipoForm){
+		Equipos equipos = equiposDAO.loadById(equipoForm.getEquipos().getIdEquipo());
+		equiposDAO.delete(equipos);
 	}
 	
+	
+	/**
+	 * Actualiza la informacion de un equipo
+	 * @param equipoForm contenedor de informacion de equipo
+	 * @return instancia ya actualizada con el id asignado
+	 */
+	public Equipos confirmaActualizacionEquipo(EquipoForm equipoForm){
+		Equipos equipo =  equipoForm.getEquipos();
+
+		//Se obtiene el equipo de la base de datos.
+		Equipos currentEquipo = equiposDAO.loadById(equipo.getIdEquipo());
+		//Se obtiene el usuario proveniente de la forma
+		Usuario usuario = usuarioDAO.findById(equipoForm.getIdNombreUsuarioResponsable());
+		//Se obtiene el estado proveniente de la forma
+		Estado estado = estadoDAO.findById(equipoForm.getEquipos().getEstado().getIdEstado());
+		log.debug("Estadoa a actualizar " + estado);
+		//Se establecen los valores provenientes de la forma
+
+		currentEquipo.setTipo(equipo.getTipo());
+		currentEquipo.setModelo(equipo.getModelo());
+		currentEquipo.setNumSerie(equipo.getNumSerie());
+		currentEquipo.setMarca(equipo.getMarca());
+		currentEquipo.setUsuario(usuario);
+		currentEquipo.setEstado(estado);
+		currentEquipo.setUbicacionString(equipo.getUbicacionString());
+		log.debug("currentEquipo  " + currentEquipo);
+
+		equiposDAO.update(currentEquipo);
+		return equipo;
+	}
 	
 }

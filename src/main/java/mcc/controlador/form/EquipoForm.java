@@ -17,6 +17,22 @@ public class EquipoForm {
 				+ ", idNombreUsuarioResponsable=" + idNombreUsuarioResponsable
 				+ ", equipos=" + equipos + "]";
 	}
+	
+	private String estatusBusqueda;
+	
+
+	public String getEstatusBusqueda() {
+		return estatusBusqueda;
+	}
+
+
+
+
+
+
+	public void setEstatusBusqueda(String estatusBusqueda) {
+		this.estatusBusqueda = estatusBusqueda;
+	}
 
 	/**
      *Mapa para utilizar en un 

@@ -4,8 +4,11 @@ import java.util.List;
 
 import mcc.beans.Equipos;
 
+import org.hibernate.HibernateException;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,32 +29,84 @@ import org.springframework.stereotype.Repository;
 public class EquiposDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(EquiposDAO.class);
 
-	public void save(Equipos transientInstance) {
+	public Equipos save(Equipos transientInstance) {
 		log.debug("saving Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
 		try {
-			getSession().save(transientInstance);
+			session.save(transientInstance);
+			txt.commit();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			txt.rollback();
 			throw re;
 		}
+		finally {
+	        	session.close();
+	        } 
+		return transientInstance;
+	}
+	
+	
+	public Equipos update(Equipos transientInstance) {
+		log.debug("updating Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
+        try {
+        	session.update(transientInstance);
+            txt.commit();
+            log.debug("update successful");
+        }
+        catch ( HibernateException e ){
+        	txt.rollback();
+        	log.debug("update failed", e );
+        	throw e;
+        }
+        finally {
+        	session.close();
+        }        	
+		return transientInstance;
 	}
 
 	public void delete(Equipos persistentInstance) {
 		log.debug("deleting Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
 		try {
-			getSession().delete(persistentInstance);
-			log.debug("delete successful");
+			
+			//Query query = getSession().createQuery("delete Equipos where idEquipo = :idEquipo");
+			//query.setParameter("idEquipo",persistentInstance.getIdEquipo());
+			//int result = query.executeUpdate();
+			session.delete(persistentInstance);
+            txt.commit();
+            log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
+			txt.rollback();
 			throw re;
 		}
+		 finally {
+	        	session.close();
+	        } 
 	}
 
 	public Equipos findById(java.lang.Integer id) {
 		log.debug("getting Equipos instance with id: " + id);
 		try {
 			Equipos instance = (Equipos) getSession().get("mcc.beans.Equipos",
+					id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+
+	public Equipos loadById(java.lang.Integer id) {
+		log.debug("loading Equipos instance with id: " + id);
+		try {
+			Equipos instance = (Equipos) getSession().load(Equipos.class,
 					id);
 			return instance;
 		} catch (RuntimeException re) {

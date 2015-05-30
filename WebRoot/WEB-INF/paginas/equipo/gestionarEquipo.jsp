@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista de usuarios</title>
+<title>Gestionar Equipo</title>
 <%@include file="../plantilla/estilosCSS.html" %> 
 </head>
 <body>
@@ -16,7 +16,7 @@
 <!-- inicia va el contenido -->
 <c:if test="${msg!=null}">
 <div class="container" >
-<div class="alert alert-success" role="alert">El registro se ha guardado con éxito</div>
+<div class="alert alert-success" role="alert">${msg}</div>
 </div>				
 </c:if>
  <div class="jumbotron">

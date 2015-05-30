@@ -7,21 +7,129 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista de usuarios</title>
+<title>Eliminar Equipo</title>
 <%@include file="../plantilla/estilosCSS.html" %> 
 </head>
 <body>
 <%@include file="../plantilla/encabezado.html" %> 
 <br />
 <!-- inicia va el contenido -->
- <div class="jumbotron">
-      <div class="container">
-        <h1 class="text-center">Eliminar Equipo</h1>
-      
-      </div>
-    </div>
-
-
+<div class="container">
+	<h2 class="bg-primary text-center">Eliminar  Equipo</h2>
+	<div class="row text-center" >
+	
+	<div class="col-md-12">
+		<form name="formbuscarporid" id="formbuscarporid" action="${pageContext.request.contextPath}/equipo/buscarEquipoPorIdParaEliminar.html" >
+			<label for="idEquipo">Clave de Equipo</label>
+			<input type="text" id="idEquipo" name="idEquipo" maxlength="15" />
+			<input type="submit" class="btn btn-primary  active"  value="buscar" />
+				<span class="glyphicon glyphicon-search" aria-hidden="true">
+			</span>
+		</form>
+		<br />
+		<br />
+		
+	</div>
+	<br />
+	</div>
+	<c:choose>
+		<c:when test="${equipoForm.estatusBusqueda!=null &&  equipoForm.estatusBusqueda == 'NOTFOUND'}" >
+			<div class="container" >
+				<div class="alert alert-warning" role="alert">No se ha encontrado información</div>
+			</div>	
+      	</c:when>
+      	<c:when test="${equipoForm.estatusBusqueda!=null &&  equipoForm.estatusBusqueda == 'NOTVALIDKEY'}" >
+			<div class="container" >
+				<div class="alert alert-danger" role="alert">Clave no valida</div>
+			</div>	
+      	</c:when>
+	 </c:choose>
+	
+	<!-- inicia va el contenido -->
+	<c:if test="${equipoForm.equipos.usuario!=null &&  equipoForm.equipos.idEquipo!=0 }">
+  	<form:form method="post" action="${pageContext.request.contextPath}/equipo/confirmaBorradoEquipo.html"   
+  	modelAttribute="equipoForm" cssClass="form-horizontal" role="form">
+	<div class="row" >
+	    <div id="form-registra-equipo-izquierda" class="col-md-6">
+			<div class="form-group ">
+				<form:label path="equipos.tipo" class="control-label col-md-3">Tipo  :
+				</form:label>
+				<div class="col-md-9">
+				    <form:input path="equipos.tipo" class="form-control"  maxlength="40"  readonly="true" />
+				 	<form:errors path="equipos.tipo"  cssClass="text-danger pull-left" element="div"  />
+			    </div> 
+			</div> 
+			<div class="form-group ">
+	    		<form:label path="equipos.modelo" class="control-label col-md-3">Modelo  :
+	    		</form:label>
+		    	<div class="col-md-9">
+		        	<form:input path="equipos.modelo" class="form-control"  maxlength="40" readonly="true" />
+		        	<form:errors path="equipos.modelo"  cssClass="text-danger pull-left" element="div"  />
+		    	</div> 
+			</div> 
+			<div class="form-group ">
+	    		<form:label path="equipos.numSerie" class="control-label col-md-3">Num Serie :
+	    		</form:label>
+		    	<div class="col-md-9">
+		        	<form:input path="equipos.numSerie" class="form-control"  maxlength="40"  readonly="true"/>
+		        	<form:errors path="equipos.numSerie"  cssClass="text-danger pull-left" element="div"  />
+		    	</div> 
+			</div> 
+			<div class="form-group ">
+	    		<label for="equipos.usuario" class="control-label col-md-3">Responsable :
+	    		</label>
+		    	<div class="col-md-9">
+		        	<input type="text" name="equipos.numSerie" class="form-control"  maxlength="40"  readonly="true" 
+		        	value="${equipoForm.equipos.usuario.nombre} ${equipoForm.equipos.usuario.apellido}"
+		        	/>
+		    	</div> 
+			</div> 
+		
+			
+	
+	    </div> <!--  fin form-registra-equipo-izquierda -->
+	     <div id="form-registra-equipo-derecha" class="col-md-6">
+		     <div class="form-group ">
+			        <form:label path="equipos.estado.descripcion" class="control-label col-sm-3">Estado :
+			        </form:label>
+			        <div class="col-sm-9">
+			        <form:input path="equipos.estado.descripcion" value="${equipos.estado.descripcion}" class="form-control" readonly="true" />
+			        </div>
+			    </div>
+				<div class="form-group ">
+					<form:label path="equipos.ubicacionString" class="control-label col-md-3">Ubicacion :
+					</form:label>
+					<div class="col-md-9">
+					    <form:input path="equipos.ubicacionString" class="form-control"  maxlength="40"  readonly="true" />
+						<form:errors path="equipos.ubicacionString"  cssClass="text-danger pull-left" element="div"   />
+					</div> 
+				</div> 
+				<div class="form-group ">
+					<form:label path="equipos.idEquipo" class="control-label col-md-3">Clave Equipo :
+					</form:label>
+					<div class="col-md-9">
+					    <form:input path="equipos.idEquipo" class="form-control"  maxlength="40"  readonly="true" />
+						<form:errors path="equipos.idEquipo"  cssClass="text-danger pull-left" element="div"   />
+					</div> 
+				</div> 
+	     </div><!-- fin form-registra-equipo-derecha -->
+    </div> <!-- fin row form -->
+    
+	<div class="row">
+		<div class="form-group ">
+			<div class="col-sm-4" ></div>	
+			<div class="col-sm-3">
+				<input type="submit"  class="btn btn-danger" value="Eliminar" />
+			</div>
+			<div class="col-sm-3">
+				<a class="btn btn-warning" href="${pageContext.request.contextPath}/equipo/gestionarEquipo.html">Cancelar</a>
+			</div>
+	 	</div>
+	 </div>	
+	</form:form>
+</c:if>
+	
+</div> <!-- fin container -->
 
 <!--  finaliza el contenido -->
 <%@include file="../plantilla/piepagina.html" %> 
