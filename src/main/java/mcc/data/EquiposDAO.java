@@ -4,8 +4,11 @@ import java.util.List;
 
 import mcc.beans.Equipos;
 
+import org.hibernate.HibernateException;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,28 +31,64 @@ public class EquiposDAO extends BaseHibernateDAO {
 
 	public Equipos save(Equipos transientInstance) {
 		log.debug("saving Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
 		try {
-			getSession().save(transientInstance);
+			session.save(transientInstance);
+			txt.commit();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			txt.rollback();
 			throw re;
 		}
+		finally {
+	        	session.close();
+	        } 
+		return transientInstance;
+	}
+	
+	
+	public Equipos update(Equipos transientInstance) {
+		log.debug("updating Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
+        try {
+        	session.update(transientInstance);
+            txt.commit();
+            log.debug("update successful");
+        }
+        catch ( HibernateException e ){
+        	txt.rollback();
+        	log.debug("update failed", e );
+        	throw e;
+        }
+        finally {
+        	session.close();
+        }        	
 		return transientInstance;
 	}
 
 	public void delete(Equipos persistentInstance) {
 		log.debug("deleting Equipos instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
 		try {
 			
-			Query query = getSession().createQuery("delete Equipos where idEquipo = :idEquipo");
-			query.setParameter("idEquipo",persistentInstance.getIdEquipo());
-			int result = query.executeUpdate();
-			log.debug("delete successful " + result);
+			//Query query = getSession().createQuery("delete Equipos where idEquipo = :idEquipo");
+			//query.setParameter("idEquipo",persistentInstance.getIdEquipo());
+			//int result = query.executeUpdate();
+			session.delete(persistentInstance);
+            txt.commit();
+            log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
+			txt.rollback();
 			throw re;
 		}
+		 finally {
+	        	session.close();
+	        } 
 	}
 
 	public Equipos findById(java.lang.Integer id) {

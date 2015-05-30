@@ -19,7 +19,7 @@
 	<div class="row text-center" >
 	
 	<div class="col-md-12">
-		<form name="formbuscarporid" id="formbuscarporid" action="${pageContext.request.contextPath}/equipo/buscarEquipoPorId.html" >
+		<form name="formbuscarporid" id="formbuscarporid" action="${pageContext.request.contextPath}/equipo/buscarEquipoPorIdParaEliminar.html" >
 			<label for="idEquipo">Clave de Equipo</label>
 			<input type="text" id="idEquipo" name="idEquipo" maxlength="15" />
 			<input type="submit" class="btn btn-primary  active"  value="buscar" />
@@ -32,15 +32,21 @@
 	</div>
 	<br />
 	</div>
-	<c:if test="${equipoForm.estatusBusqueda!=null &&  equipoForm.estatusBusqueda == 'NOTFOUND'}">
-	<div class="container" >
-		<div class="alert alert-warning" role="alert">No se ha encontrado información</div>
-	</div>	
-	</c:if>
-	
+	<c:choose>
+		<c:when test="${equipoForm.estatusBusqueda!=null &&  equipoForm.estatusBusqueda == 'NOTFOUND'}" >
+			<div class="container" >
+				<div class="alert alert-warning" role="alert">No se ha encontrado información</div>
+			</div>	
+      	</c:when>
+      	<c:when test="${equipoForm.estatusBusqueda!=null &&  equipoForm.estatusBusqueda == 'NOTVALIDKEY'}" >
+			<div class="container" >
+				<div class="alert alert-danger" role="alert">Clave no valida</div>
+			</div>	
+      	</c:when>
+	 </c:choose>
 	
 	<!-- inicia va el contenido -->
-<c:if test="${equipoForm!=null &&  equipoForm.equipos.idEquipo!=0 }">
+	<c:if test="${equipoForm.equipos.usuario!=null &&  equipoForm.equipos.idEquipo!=0 }">
   	<form:form method="post" action="${pageContext.request.contextPath}/equipo/confirmaBorradoEquipo.html"   
   	modelAttribute="equipoForm" cssClass="form-horizontal" role="form">
 	<div class="row" >
@@ -121,7 +127,7 @@
 	 	</div>
 	 </div>	
 	</form:form>
-	</c:if>
+</c:if>
 	
 </div> <!-- fin container -->
 

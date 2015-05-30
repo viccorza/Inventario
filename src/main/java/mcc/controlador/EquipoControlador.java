@@ -103,7 +103,8 @@ public class EquipoControlador {
 	public ModelAndView eliminarEquipo(){
 		log.debug("Iniciando pagina de eliminarEquipo");
 		EquipoForm equipoForm = equipoNegocio.iniciarPaginaRegistrarEquipo(new EquipoForm());
-		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
+		equipoForm.setEquipos(null);
+		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",equipoForm);
 	}
 	
 	/**
@@ -118,34 +119,73 @@ public class EquipoControlador {
 	}
 	/**
 	 * Realiza la busqueda de un 
-	 * equipo por ID
+	 * equipo por ID para la pagina de eliminar
 	 * @param idEquipo
 	 * @return
 	 */
-	@RequestMapping("buscarEquipoPorId")
-	public ModelAndView buscarEquipoPorId(@RequestParam("idEquipo")String idEquipo){
+	@RequestMapping("buscarEquipoPorIdParaEliminar")
+	public ModelAndView buscarEquipoPorIdParaEliminar(@RequestParam("idEquipo")String idEquipo){
 		int idEquipoInt =0;
+		EquipoForm equipoForm = new EquipoForm();
+		equipoForm.setEquipos(null);
 		try{
 			 idEquipoInt =Integer.parseInt(idEquipo);
 		}
 		catch(NumberFormatException ex){
-			return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
+			equipoForm.setEstatusBusqueda("NOTVALIDKEY");
+			return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",equipoForm);
 
 		}
 		if(idEquipo!=null && !idEquipo.trim().isEmpty() && idEquipoInt !=0){
-			EquipoForm equipoForm = equipoNegocio.buscarEquipoPorID(new EquipoForm(), idEquipoInt);
+			 equipoForm = equipoNegocio.buscarEquipoPorID(new EquipoForm(), idEquipoInt);
 				return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",equipoForm);
 			
 		}
-		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
+		equipoForm.setEstatusBusqueda("NOTFOUND");
+		equipoForm.setEquipos(null);
+		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",equipoForm);
 
 	}
-	
+	/**
+	 * confirma el borrado de un equipo
+	 * @param equipoForm contenedor de la informacion de equipo
+	 * @return
+	 */
 	@RequestMapping("confirmaBorradoEquipo")
 	public ModelAndView confirmaBorradoEquipo(@ModelAttribute("equipoForm") EquipoForm equipoForm)
 	{
 		equipoNegocio.confirmaBorradoEquipo(equipoForm);
 		return new ModelAndView(carpetaEquipo+"/gestionarEquipo","msg","El registro con id: "+ equipoForm.getEquipos().getIdEquipo()+" ha sido borrado");
+
+	}
+	
+	
+	/**
+	 * Realiza la busqueda de un 
+	 * equipo por ID para la pagina de eliminar
+	 * @param idEquipo
+	 * @return
+	 */
+	@RequestMapping("buscarEquipoPorIdParaConsultar")
+	public ModelAndView buscarEquipoPorIdParaConsultar(@RequestParam("idEquipo")String idEquipo){
+		int idEquipoInt =0;
+		EquipoForm equipoForm = new EquipoForm();
+		equipoForm.setEquipos(null);
+		try{
+			 idEquipoInt =Integer.parseInt(idEquipo);
+		}
+		catch(NumberFormatException ex){
+			equipoForm.setEstatusBusqueda("NOTVALIDKEY");
+			return new ModelAndView(carpetaEquipo+"/consultarEquipo","equipoForm",equipoForm);
+
+		}
+		if(idEquipo!=null && !idEquipo.trim().isEmpty() && idEquipoInt !=0){
+			equipoForm =  equipoNegocio.buscarEquipoPorID(new EquipoForm(), idEquipoInt);
+				return new ModelAndView(carpetaEquipo+"/consultarEquipo","equipoForm",equipoForm);
+			
+		}
+		equipoForm.setEstatusBusqueda("NOTFOUND");
+		return new ModelAndView(carpetaEquipo+"/consultarEquipo","equipoForm",equipoForm);
 
 	}
 	
@@ -155,8 +195,67 @@ public class EquipoControlador {
 	 */
 	@RequestMapping("actualizarEquipo")
 	public String actualizarEquipo(){
-		log.debug("Iniciando pagina de actualizarEquipos");
 		return carpetaEquipo+"/actualizarEquipo";
 	}
+	
+	/**
+	 * Busca equipo por ID para la pantalla
+	 * de actualizar
+	 * @param idEquipo
+	 * @return
+	 */
+	@RequestMapping("buscarEquipoPorIdParaActualizar")
+	public ModelAndView buscarEquipoPorIdParaActualizar(@RequestParam("idEquipo")String idEquipo){
+		log.debug("Buscando para  actualizar Equipo " + idEquipo);
+		int idEquipoInt =0;
+		EquipoForm equipoForm = new EquipoForm();
+		equipoForm.setEquipos(null);
+		try{
+			 idEquipoInt =Integer.parseInt(idEquipo);
+		}
+		catch(NumberFormatException ex){
+			equipoForm.setEstatusBusqueda("NOTVALIDKEY");
+			return new ModelAndView(carpetaEquipo+"/actualizarEquipo","equipoForm",equipoForm);
+
+		}
+		if(idEquipo!=null && !idEquipo.trim().isEmpty() && idEquipoInt !=0){
+			equipoForm =  equipoNegocio.buscarEquipoPorID(new EquipoForm(), idEquipoInt);
+			if(equipoForm.getEquipos().getUsuario()!=null)
+			{
+				Usuario usuario = equipoForm.getEquipos().getUsuario();
+				equipoForm.setNombreUsuarioResponsable(usuario.getNombre()+" "+usuario.getApellido());
+				equipoForm.setIdNombreUsuarioResponsable(usuario.getIdUsuario());
+				return new ModelAndView(carpetaEquipo+"/actualizarEquipo","equipoForm",equipoForm);
+			}
+		}
+		equipoForm.setEstatusBusqueda("NOTFOUND");
+		return new ModelAndView(carpetaEquipo+"/actualizarEquipo","equipoForm",equipoForm);
+	}
+	
+	/**
+	 * Actualiza la informacion de un equipo
+	 * @param equipoForm datos de la forma
+	 * @param bindingResult en caso de que haya errores, se guardan en esta entidad
+	 * @return si hay errores muestra la misma pantalla , si no, muestra gestionar equipo
+	 */
+	@RequestMapping("confirmaactualizarequipo")
+	public ModelAndView confirmaActualizarEquipo(@ModelAttribute("equipoForm") EquipoForm equipoForm,
+			BindingResult bindingResult)
+	{
+		log.debug("-> Iniciando pagina de confirmaActualizarEquipo " + equipoForm);
+		equipoFormValidator.validate(equipoForm, bindingResult);
+		if(bindingResult.hasErrors()){
+			equipoForm =  equipoNegocio.buscarEquipoPorID(new EquipoForm(), equipoForm.getEquipos().getIdEquipo());
+			Usuario usuario = equipoForm.getEquipos().getUsuario();
+			equipoForm.setNombreUsuarioResponsable(usuario.getNombre()+" "+usuario.getApellido());
+			equipoForm.setIdNombreUsuarioResponsable(usuario.getIdUsuario());
+			return new ModelAndView(carpetaEquipo+"/actualizarEquipo","equipoForm",equipoForm);
+		}
+		Equipos equipos = equipoNegocio.confirmaActualizacionEquipo(equipoForm);
+		log.debug("<- Finalizando actualizacion " + equipoForm);
+
+		return new ModelAndView(carpetaEquipo+"/gestionarEquipo","msg","Actualizacion exitosa de la clave de equipo : "+equipos.getIdEquipo());
+	}
+	
 	
 }

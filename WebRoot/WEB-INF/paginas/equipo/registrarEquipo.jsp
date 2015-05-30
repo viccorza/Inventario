@@ -69,10 +69,10 @@
 	    </div> <!--  fin form-registra-equipo-izquierda -->
 	     <div id="form-registra-equipo-derecha" class="col-md-6">
 		     <div class="form-group ">
-			        <form:label path="equipos.estado" class="control-label col-sm-3">Estado * :
+			        <form:label path="equipos.estado.idEstado" class="control-label col-sm-3">Estado * :
 			        </form:label>
 			        <div class="col-sm-4">
-			        <form:select path="equipos.estado" items="${equipoForm.estadoMap}" />
+			        <form:select path="equipos.estado.idEstado" items="${equipoForm.estadoMap}" />
 			        </div>
 			    </div>
 				<div class="form-group ">
