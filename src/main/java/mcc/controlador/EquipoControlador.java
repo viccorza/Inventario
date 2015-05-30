@@ -3,6 +3,7 @@ package mcc.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcc.beans.Equipos;
 import mcc.beans.Usuario;
 import mcc.controlador.form.EquipoForm;
 import mcc.controlador.form.UsuarioAutoComplete;
@@ -55,19 +56,31 @@ public class EquipoControlador {
 		return usuarioAutoCompleteList;
 	}
 	
+    /**
+     * Muestra la pantalla de gestionarEquipo
+     * @return
+     */
 	@RequestMapping("gestionarEquipo")
 	public String gestionarEquipo(){
 		log.debug("Iniciando pagina de administracion de equipos");
 		return carpetaEquipo+"/gestionarEquipo";
 	}
-	
+	/**
+	 * Muestra la pantalla de registrar Equipo
+	 * @return
+	 */
 	@RequestMapping("registrarEquipo")
 	public ModelAndView registrarEquipo(){
 		log.debug("Iniciando pagina de registrarEquipo");
 		EquipoForm equipoForm = equipoNegocio.iniciarPaginaRegistrarEquipo(new EquipoForm());
 		return new ModelAndView(carpetaEquipo+"/registrarEquipo","equipoForm",equipoForm);
 	}
-	
+	/**
+	 * Guarda la informacion de un equipo
+	 * @param equipoForm datos de la forma
+	 * @param bindingResult en caso de que haya errores, se guardan en esta entidad
+	 * @return si hay errores muestra la misma pantalla , si no, muestra gestionar equipo
+	 */
 	@RequestMapping("confirmaregistrarequipo")
 	public ModelAndView confirmaregistrarequipo(@ModelAttribute("equipoForm") EquipoForm equipoForm,
 			BindingResult bindingResult)
@@ -78,23 +91,68 @@ public class EquipoControlador {
 			equipoForm = equipoNegocio.iniciarPaginaRegistrarEquipo(equipoForm);
 			return new ModelAndView(carpetaEquipo+"/registrarEquipo","equipoForm",equipoForm);
 		}
-		equipoNegocio.confirmaRegistroEquipo(equipoForm);
-		return new ModelAndView(carpetaEquipo+"/gestionarEquipo","msg","El registro se ha guardado con exito");
+		Equipos equipos = equipoNegocio.confirmaRegistroEquipo(equipoForm);
+		return new ModelAndView(carpetaEquipo+"/gestionarEquipo","msg","Registro exitoso, id Asignado : "+equipos.getIdEquipo());
 	}
 	
-	
+	/**
+	 * Muestra la pantalla de eliminar equipo
+	 * @return
+	 */
 	@RequestMapping("eliminarEquipo")
-	public String eliminarEquipo(){
+	public ModelAndView eliminarEquipo(){
 		log.debug("Iniciando pagina de eliminarEquipo");
-		return carpetaEquipo+"/eliminarEquipo";
+		EquipoForm equipoForm = equipoNegocio.iniciarPaginaRegistrarEquipo(new EquipoForm());
+		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
 	}
 	
+	/**
+	 * Muestra la pantalla de consultar equipo
+	 * @return
+	 */
+
 	@RequestMapping("consultarEquipo")
 	public String consultarEquipo(){
 		log.debug("Iniciando pagina de consultarEquipo");
 		return carpetaEquipo+"/consultarEquipo";
 	}
+	/**
+	 * Realiza la busqueda de un 
+	 * equipo por ID
+	 * @param idEquipo
+	 * @return
+	 */
+	@RequestMapping("buscarEquipoPorId")
+	public ModelAndView buscarEquipoPorId(@RequestParam("idEquipo")String idEquipo){
+		int idEquipoInt =0;
+		try{
+			 idEquipoInt =Integer.parseInt(idEquipo);
+		}
+		catch(NumberFormatException ex){
+			return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
+
+		}
+		if(idEquipo!=null && !idEquipo.trim().isEmpty() && idEquipoInt !=0){
+			EquipoForm equipoForm = equipoNegocio.buscarEquipoPorID(new EquipoForm(), idEquipoInt);
+				return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",equipoForm);
+			
+		}
+		return new ModelAndView(carpetaEquipo+"/eliminarEquipo","equipoForm",null);
+
+	}
 	
+	@RequestMapping("confirmaBorradoEquipo")
+	public ModelAndView confirmaBorradoEquipo(@ModelAttribute("equipoForm") EquipoForm equipoForm)
+	{
+		equipoNegocio.confirmaBorradoEquipo(equipoForm);
+		return new ModelAndView(carpetaEquipo+"/gestionarEquipo","msg","El registro con id: "+ equipoForm.getEquipos().getIdEquipo()+" ha sido borrado");
+
+	}
+	
+	/**
+	 * Muestra la pantalla de actualizar equipo
+	 * @return
+	 */
 	@RequestMapping("actualizarEquipo")
 	public String actualizarEquipo(){
 		log.debug("Iniciando pagina de actualizarEquipos");

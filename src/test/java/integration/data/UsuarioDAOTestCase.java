@@ -21,10 +21,11 @@ public class UsuarioDAOTestCase {
 	@Autowired
 	RolDAO rolDAO;
 	
-	//@Test
+	@Test
 	public void findAllTest(){
 		Rol rol = rolDAO.findById(3);
-		for(int i=0 ; i<5;i++){
+		//for(int i=0 ; i<5;i++){
+		int i =100;
 		Usuario usuario = new Usuario();
 		usuario.setNombre("nombre");
 		usuario.setApellido("apellido");
@@ -33,7 +34,8 @@ public class UsuarioDAOTestCase {
 		usuario.setContrasena("secret"+i);
 		usuario.setRol(rol);
 		usuarioDAO.save(usuario);
-		}
+		System.out.println(usuario.getIdUsuario());
+		//}
 	}
 
 }

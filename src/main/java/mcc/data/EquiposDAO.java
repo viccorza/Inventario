@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 public class EquiposDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(EquiposDAO.class);
 
-	public void save(Equipos transientInstance) {
+	public Equipos save(Equipos transientInstance) {
 		log.debug("saving Equipos instance");
 		try {
 			getSession().save(transientInstance);
@@ -35,13 +35,17 @@ public class EquiposDAO extends BaseHibernateDAO {
 			log.error("save failed", re);
 			throw re;
 		}
+		return transientInstance;
 	}
 
 	public void delete(Equipos persistentInstance) {
 		log.debug("deleting Equipos instance");
 		try {
-			getSession().delete(persistentInstance);
-			log.debug("delete successful");
+			
+			Query query = getSession().createQuery("delete Equipos where idEquipo = :idEquipo");
+			query.setParameter("idEquipo",persistentInstance.getIdEquipo());
+			int result = query.executeUpdate();
+			log.debug("delete successful " + result);
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
 			throw re;
@@ -52,6 +56,18 @@ public class EquiposDAO extends BaseHibernateDAO {
 		log.debug("getting Equipos instance with id: " + id);
 		try {
 			Equipos instance = (Equipos) getSession().get("mcc.beans.Equipos",
+					id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+
+	public Equipos loadById(java.lang.Integer id) {
+		log.debug("loading Equipos instance with id: " + id);
+		try {
+			Equipos instance = (Equipos) getSession().load(Equipos.class,
 					id);
 			return instance;
 		} catch (RuntimeException re) {

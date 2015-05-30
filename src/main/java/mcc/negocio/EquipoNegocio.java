@@ -66,14 +66,46 @@ public class EquipoNegocio {
 		return usuarioAutoCompleteList ;
 	}
 	
-	public void confirmaRegistroEquipo(EquipoForm equipoForm){
+	/**
+	 * Inserta la informacion de un equipo
+	 * @param equipoForm contenedor de informacion de equipo
+	 * @return instancia ya insertada con el id asignado
+	 */
+	public Equipos confirmaRegistroEquipo(EquipoForm equipoForm){
 		Usuario usuario = usuarioDAO.findById(equipoForm.getIdNombreUsuarioResponsable());
 		Estado estado = estadoDAO.findById(Integer.parseInt(equipoForm.getEquipos().getEstado().getEstado()));
 		Equipos equipo =  equipoForm.getEquipos();
 		equipo.setUsuario(usuario);
 		equipo.setEstado(estado);
 		equiposDAO.save(equipo);
+		return equipo;
 	}
-	
+	/**
+	 * Busca un equipo por id
+	 * @param equipoForm contenedor de informacion del equipo
+	 * @param idEquipo id del equipo a buscar
+	 * @return
+	 */
+	public EquipoForm buscarEquipoPorID(EquipoForm equipoForm,int idEquipo){
+		Equipos equipos = equiposDAO.findById(idEquipo);
+		if(equipos==null){
+			equipoForm.setEstatusBusqueda("NOTFOUND");
+		}
+		else
+		{
+			equipoForm.setEquipos(equipos);
+		}
+		return equipoForm;
+	}
+
+	/**
+	 * Confirma el borrado de un equipo
+	 * en a base de datos
+	 * @param equipoForm
+	 */
+	public void confirmaBorradoEquipo(EquipoForm equipoForm){
+		Equipos equipos = equiposDAO.loadById(equipoForm.getEquipos().getIdEquipo());
+		equiposDAO.delete(equipos);
+	}
 	
 }
