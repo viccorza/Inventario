@@ -12,7 +12,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/vickorza/lunaworkspace/Inventario/lib/slf4j-log4j12-1.5.8.jar"/>
-	<classpathentry kind="lib" path="/home/vickorza/lunaworkspace/Inventario/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
