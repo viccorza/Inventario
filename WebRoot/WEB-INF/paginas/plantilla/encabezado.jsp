@@ -1,3 +1,6 @@
+<%@  page 
+import="mcc.beans.Usuario"
+ %> 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -7,7 +10,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Nombre del proyecto</a>
+          <a class="navbar-brand" href="#">Nombre del proyecto : 
+          <% 
+             Usuario usuario =(Usuario)request.getSession().getAttribute("usuarioSession");
+             Integer nombreRol = usuario.getRol().getIdRol();
+            out.println(nombreRol);
+          %>
+          
+          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">

@@ -135,4 +135,16 @@ public class UsuarioDAO extends BaseHibernateDAO {
     	return getSession().createCriteria(Usuario.class)
 				.add(Restrictions.ilike("apellido",apellido,MatchMode.ANYWHERE)).list();
   }
+	
+	/**
+	 * Busca un usuario por id usuario y por password 
+	 * @param idUsuario
+	 * @param password
+	 * @return
+	 */
+	public Usuario autenticarUsuarioPorIdUsuarioAndPassword(Integer idUsuario,String password){
+		return (Usuario)getSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("idUsuario", idUsuario)).add(Restrictions.eq("contrasena",password)).uniqueResult();
+	}
+	
 }
