@@ -53,7 +53,12 @@ public class LoginInventarioControlador {
 						usuario =  loginInventarioNegocio.autenticarUsuarioPorIdUsuarioAndPassword(idUsuario,password);
 						log.debug("Usuario obtenido" + usuario);
 						if(usuario!=null){
-							usuarioSession = usuario;
+							usuarioSession.setIdUsuario(usuario.getIdUsuario());
+							usuarioSession.setApellido(usuario.getApellido());
+							usuarioSession.setContrasena(usuario.getContrasena());
+							usuarioSession.setEmail(usuario.getEmail());
+							usuarioSession.setNombre(usuario.getNombre());
+							usuarioSession.setRol(usuario.getRol());
 							isValidUser = true;
 						}
 

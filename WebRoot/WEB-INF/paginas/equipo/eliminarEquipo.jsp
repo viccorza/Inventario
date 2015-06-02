@@ -11,7 +11,7 @@
 <%@include file="../plantilla/estilosCSS.html" %> 
 </head>
 <body>
-<%@include file="../plantilla/encabezado.html" %> 
+<%@include file="../plantilla/encabezado.jsp" %> 
 <br />
 <!-- inicia va el contenido -->
 <div class="container">

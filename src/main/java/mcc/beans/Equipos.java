@@ -11,14 +11,7 @@ public class Equipos implements java.io.Serializable {
 
 	// Fields
 
-	@Override
-	public String toString() {
-		return "Equipos [idEquipo=" + idEquipo + ", estado=" + estado
-				+ ", usuario=" + usuario + ", numSerie=" + numSerie
-				+ ", modelo=" + modelo + ", marca=" + marca + ", ubicación="
-				+ ubicación + ", tipo=" + tipo + "]";
-	}
-
+	
 	private Integer idEquipo;
 	private Estado estado;
 	private Usuario usuario;
