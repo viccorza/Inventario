@@ -1,5 +1,6 @@
 package integration.data;
 
+import static org.junit.Assert.*;
 import mcc.beans.Rol;
 import mcc.beans.Usuario;
 import mcc.data.RolDAO;
@@ -36,6 +37,13 @@ public class UsuarioDAOTestCase {
 		usuarioDAO.save(usuario);
 		System.out.println(usuario.getIdUsuario());
 		//}
+	}
+	
+	@Test
+	public void autenticarUsuarioPorIdUsuarioAndPasswordTest(){
+		Usuario usuario = usuarioDAO.autenticarUsuarioPorIdUsuarioAndPassword(1,"secret0");
+		assertNotNull(usuario);
+		
 	}
 
 }
