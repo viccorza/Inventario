@@ -4,8 +4,11 @@ import java.util.List;
 
 import mcc.beans.Reparaciones;
 
+import org.hibernate.FetchMode;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +32,21 @@ public class ReparacionesDAO extends BaseHibernateDAO {
 
 	public void save(Reparaciones transientInstance) {
 		log.debug("saving Reparaciones instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
+		
 		try {
-			getSession().save(transientInstance);
+			session.save(transientInstance);
+			txt.commit();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			txt.rollback();
 			throw re;
 		}
+		finally {
+        	session.close();
+        } 
 	}
 
 	public void delete(Reparaciones persistentInstance) {
@@ -90,12 +101,14 @@ public class ReparacionesDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findAll() {
+	@SuppressWarnings("unchecked")
+	public List<Reparaciones> findAll() {
 		log.debug("finding all Reparaciones instances");
 		try {
-			String queryString = "from Reparaciones";
-			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list();
+			return getSession().createCriteria(Reparaciones.class)
+					.setFetchMode("equipos", FetchMode.JOIN)
+					.setFetchMode("usuario", FetchMode.JOIN)
+					.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
