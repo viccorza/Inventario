@@ -3,13 +3,16 @@ package mcc.data;
 import java.util.List;
 
 import mcc.beans.Equipos;
+import mcc.beans.Reparaciones;
 
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -186,6 +189,23 @@ public class EquiposDAO extends BaseHibernateDAO {
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
+			throw re;
+		}
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Equipos> buscarTodosPorResponsable(Integer idResponsable) {
+		log.debug("finding all Reparaciones instances");
+		try {
+			return getSession().createCriteria(Equipos.class)
+					.add(Restrictions.eq("usuario.idUsuario", idResponsable))
+					.setFetchMode("estado", FetchMode.JOIN)
+					.setFetchMode("usuario", FetchMode.JOIN)
+					.list();
+				
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
 			throw re;
 		}
 	}

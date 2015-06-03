@@ -56,7 +56,9 @@
   	
   		 <div class="col-sm-2 col-md-2">
          
-                    <a  class="btn btn-default" href=" <c:url value="/equipo/gestionarResponsable.html" />" >
+                    <a  class="btn btn-default" href=" <c:url value="/responsable/gestionarResponsable.html">
+   										  <c:param name="idUsuarioString" value="${usuarioSession.getIdUsuario()}"/>
+										  </c:url>" >
                     CONSULTAR POR RESPONSABLE
                     </a>
          
