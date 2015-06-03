@@ -78,7 +78,12 @@ public class LoginInventarioControlador {
 	
 	@RequestMapping(value="bienvenidaUsuario",method = RequestMethod.GET)
 	public String bienvenidaUsuario(@ModelAttribute("usuarioSession") Usuario usuarioSession){
-		return carpetaUsuario+"/bienvenidaUsuario";
+		if(usuarioSession==null || usuarioSession.getNombre()==null){
+			return carpetaUsuario+"/accesoDenegado";
+		}
+		else{
+			return carpetaUsuario+"/bienvenidaUsuario";
+		}
 	}
 		
 }

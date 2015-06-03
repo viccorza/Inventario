@@ -31,6 +31,8 @@ public class GeneradorReporteExcel extends AbstractExcelView {
 		List<String> titulosList= new ArrayList<String>();
 		titulosList.add("Id Reparacion");
 		titulosList.add("Tipo de equipo");
+		titulosList.add("Modelo");
+		titulosList.add("Numero de serie");
 		titulosList.add("Responsable Equipo");
 		titulosList.add("Fecha de Reparacion");
 		return titulosList;
@@ -92,7 +94,7 @@ public class GeneradorReporteExcel extends AbstractExcelView {
         Cell titleCell = titleRow.createCell(0);
         titleCell.setCellValue("Reporte Reparaciones");
         titleCell.setCellStyle(construirEstiloTitulo(workbook));
-        sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$D$1"));
+        sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$F$1"));
         
         Row headerRow = sheet.createRow(1);
         headerRow.setHeightInPoints(40);
@@ -121,15 +123,24 @@ public class GeneradorReporteExcel extends AbstractExcelView {
             	 celdaIdEquipo1.setCellValue(reparaciones.getEquipos().getTipo());
             	 celdaIdEquipo1.setCellStyle(estiloCelda);
             	 
-             	 Cell celdaIdEquipo2 = row.createCell(2);
-            	 celdaIdEquipo2.setCellValue(reparaciones.getUsuario().getNombre()+ " "+reparaciones.getUsuario().getApellido());
+            	 Cell celdaIdEquipo2 = row.createCell(2);
+            	 celdaIdEquipo2.setCellValue(reparaciones.getEquipos().getModelo());
             	 celdaIdEquipo2.setCellStyle(estiloCelda);
+            	 
+            	 
+            	 Cell celdaIdEquipo3 = row.createCell(3);
+            	 celdaIdEquipo3.setCellValue(reparaciones.getEquipos().getNumSerie());
+            	 celdaIdEquipo3.setCellStyle(estiloCelda);
+            	 
+             	 Cell celdaIdEquipo4 = row.createCell(4);
+            	 celdaIdEquipo4.setCellValue(reparaciones.getUsuario().getNombre()+ " "+reparaciones.getUsuario().getApellido());
+            	 celdaIdEquipo4.setCellStyle(estiloCelda);
             	 SimpleDateFormat simpleDateFormatFecha = 
             	            new SimpleDateFormat( "dd 'de' MMMM 'de' yyyy",new Locale("es"));
             	 
-            	 Cell celdaIdEquipo3 = row.createCell(3);
-            	 celdaIdEquipo3.setCellValue(simpleDateFormatFecha.format(reparaciones.getFechaReparacion().getTime()));
-            	 celdaIdEquipo3.setCellStyle(estiloCelda);
+            	 Cell celdaIdEquipo5 = row.createCell(5);
+            	 celdaIdEquipo5.setCellValue(simpleDateFormatFecha.format(reparaciones.getFechaReparacion().getTime()));
+            	 celdaIdEquipo5.setCellStyle(estiloCelda);
         	}
 	}
  
