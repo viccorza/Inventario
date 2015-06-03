@@ -19,7 +19,13 @@
     
      <mvc:annotation-driven />
      
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     <!--    -->
+     
+     <bean id="viewResolver1" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="1"/>
+        <property name="location" value="/WEB-INF/views.xml"/>
+    </bean>   
+  	<bean id="viewResolver2"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/paginas/" />
 		<property name="suffix" value=".jsp" />
 		<property name="contentType" value="text/html;charset=utf-8" />

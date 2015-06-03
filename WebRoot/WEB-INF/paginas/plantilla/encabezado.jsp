@@ -10,18 +10,24 @@ import="mcc.beans.Usuario"
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Nombre del proyecto : 
+          <a class="navbar-brand" href="#">Sistema de control de inventarios : 
           <% 
              Usuario usuario =(Usuario)request.getSession().getAttribute("usuarioSession");
-             Integer nombreRol = usuario.getRol().getIdRol();
-            out.println(nombreRol);
+          	if(usuario==null || usuario.getNombre()==null){
+          	  response.sendRedirect
+          				(request.getContextPath()+"/accesoDenegado.jsp");
+          				
+          		}
+           
+          	//Integer nombreRol = usuario.getRol().getIdRol();
+             out.println(usuario.getNombre());
           %>
           
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
-            <button type="submit" class="btn btn-success">Salir</button>
+            <a href="${pageContext.request.contextPath}/logininventario/terminarSessionUsuario.html"  class="btn btn-success">Salir</a>
           </form>
         </div><!--/.navbar-collapse -->
       </div> <!-- fin container -->
