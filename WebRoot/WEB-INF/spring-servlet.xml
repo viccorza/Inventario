@@ -19,7 +19,7 @@
     
      <mvc:annotation-driven />
      
-     <!--    -->
+     <!--  --> 
      
      <bean id="viewResolver1" class="org.springframework.web.servlet.view.XmlViewResolver">
         <property name="order" value="1"/>

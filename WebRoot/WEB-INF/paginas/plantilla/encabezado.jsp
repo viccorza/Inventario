@@ -20,7 +20,7 @@ import="mcc.beans.Usuario"
           		}
            
           	//Integer nombreRol = usuario.getRol().getIdRol();
-             out.println(usuario.getNombre());
+             out.println(usuario.getNombre()+" "+usuario.getApellido());
           %>
           
           </a>

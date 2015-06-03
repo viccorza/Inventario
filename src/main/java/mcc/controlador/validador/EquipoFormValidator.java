@@ -33,8 +33,11 @@ public class EquipoFormValidator implements Validator {
 		ValidationUtils.rejectIfEmpty(errors, "nombreUsuarioResponsable", "errorCode",valorRequerido);
 		ValidationUtils.rejectIfEmpty(errors, "equipos.estado", "errorCode",valorRequerido);
 		ValidationUtils.rejectIfEmpty(errors, "equipos.ubicacionString", "errorCode",valorRequerido);
+		ValidationUtils.rejectIfEmpty(errors, "idNombreUsuarioResponsable", "errorCode",valorRequerido);
+		if(equipoForm.getIdNombreUsuarioResponsable()<=0){
+			errors.rejectValue("nombreUsuarioResponsable", "nombreUsuarioResponsable","Debe ser un usuario Valido");
 
-
+		}
 	}
 
 	

@@ -27,7 +27,10 @@ public class ReparacionFormValidator implements Validator {
 		log.debug("Entrando al validador de Equipos");
 		ReparacionForm reparacionForm = (ReparacionForm)target;
 		ValidationUtils.rejectIfEmpty(errors, "nombreUsuarioResponsable", "errorCode",valorRequerido);
-		
+		if(reparacionForm.getIdNombreUsuarioResponsable()<=0){
+			errors.rejectValue("nombreUsuarioResponsable", "nombreUsuarioResponsable","Debe ser un usuario Valido");
+
+		}
 
 	}
 
