@@ -125,4 +125,13 @@ public class Usuario implements java.io.Serializable {
 		this.reparacioneses = reparacioneses;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", rol=" + rol + ", nombre="
+				+ nombre + ", apellido=" + apellido + ", telefono=" + telefono
+				+ ", email=" + email + ", contrasena=" + contrasena
+				+ ", equiposes=" + equiposes + ", reparacioneses="
+				+ reparacioneses + "]";
+	}
+
 }
