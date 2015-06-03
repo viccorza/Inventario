@@ -1,5 +1,9 @@
 package mcc.negocio;
 
+import java.util.List;
+
+import mcc.beans.Estado;
+import mcc.controlador.form.EquipoForm;
 import mcc.data.EquiposDAO;
 import mcc.data.EstadoDAO;
 import mcc.data.ReparacionesDAO;
@@ -33,4 +37,18 @@ public class UsuarioNegocio {
 	
 	
 	private static final Logger log = Logger.getLogger(UsuarioNegocio.class);
+	
+	/**
+	 * inicializa los recursos para mostrar
+	 * la pagina registrar usuario
+	 * @return
+	 */
+	/*public UsuarioForm iniciarPaginaRegistrarUsuario(UsuarioForm usuarioForm){
+		List<Estado> estadoList = estadoDAO.findAll();
+		for(Estado estado:estadoList){
+			equipoForm.getEstadoMap().put(estado.getIdEstado(),estado.getEstado());
+		}
+		
+		return equipoForm;
+	}*/
 }
