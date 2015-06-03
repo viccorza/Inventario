@@ -32,7 +32,7 @@
                
         </div>
      <div class="col-sm-2 col-md-2">
-                          <a class="btn btn-default" href=" <c:url value="/equipo/gestionarReporte.html" />" >
+                          <a class="btn btn-default" href=" <c:url value="/reporte/gestionarReporte.html" />" >
                    GENERAR REPORTES 
                    </a>
                

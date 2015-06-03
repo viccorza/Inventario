@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,8 +39,8 @@ public class LoginInventarioControlador {
 		return carpetaUsuario+"/loginUsuario";
 	}
 
-	@RequestMapping("autenticarUsuario")
-	public ModelAndView autenticarUsuario(@RequestParam("idUsuario")String idUsuarioString,
+	@RequestMapping(value="autenticarUsuario",method = RequestMethod.POST)
+	public ModelAndView autenticarUsuarioPOST(@RequestParam("idUsuario")String idUsuarioString,
 			@RequestParam("password")String password, @ModelAttribute("usuarioSession") Usuario usuarioSession )
 			{
 				log.debug("Entrando a login" + idUsuarioString + " "+ password);
@@ -68,13 +69,16 @@ public class LoginInventarioControlador {
 					}
 				}
 				if(isValidUser){
-					return new ModelAndView(carpetaUsuario+"/bienvenidaUsuario","usuario",usuario);
+					return new ModelAndView("redirect:/logininventario/bienvenidaUsuario.html","usuario",usuario);
 				}
 				else{
 					return new ModelAndView(carpetaUsuario+"/loginUsuario","msg","usuario no valido");
 				}
 			}
 	
-
-
+	@RequestMapping(value="bienvenidaUsuario",method = RequestMethod.GET)
+	public String bienvenidaUsuario(@ModelAttribute("usuarioSession") Usuario usuarioSession){
+		return carpetaUsuario+"/bienvenidaUsuario";
+	}
+		
 }
