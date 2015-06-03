@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -85,5 +86,10 @@ public class LoginInventarioControlador {
 			return carpetaUsuario+"/bienvenidaUsuario";
 		}
 	}
-		
+	
+	@RequestMapping("terminarSessionUsuario")
+	public ModelAndView terminarSessionUsuario(SessionStatus status){
+		status.setComplete();
+		return new ModelAndView(carpetaUsuario+"/loginUsuario","msg",null);
+	}
 }

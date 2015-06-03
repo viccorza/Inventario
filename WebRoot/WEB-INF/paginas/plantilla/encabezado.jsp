@@ -27,7 +27,7 @@ import="mcc.beans.Usuario"
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
-            <button type="submit" class="btn btn-success">Salir</button>
+            <a href="${pageContext.request.contextPath}/logininventario/terminarSessionUsuario.html"  class="btn btn-success">Salir</a>
           </form>
         </div><!--/.navbar-collapse -->
       </div> <!-- fin container -->
