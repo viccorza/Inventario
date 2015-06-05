@@ -1,5 +1,10 @@
 package mcc.negocio;
 
+import java.util.List;
+
+import mcc.beans.Rol;
+import mcc.beans.Usuario;
+import mcc.controlador.form.UsuarioForm;
 import mcc.data.EquiposDAO;
 import mcc.data.EstadoDAO;
 import mcc.data.ReparacionesDAO;
@@ -33,4 +38,25 @@ public class UsuarioNegocio {
 	
 	
 	private static final Logger log = Logger.getLogger(UsuarioNegocio.class);
+	
+	@SuppressWarnings("unchecked")
+	public UsuarioForm iniciarPaginaRegistarUsuario(UsuarioForm usuarioForm){
+		List<Rol> rolList = rolDAO.findAll();
+		for(Rol rol:rolList){
+			usuarioForm.getTipoUsuarioMap().put(rol.getIdRol(), rol.getNombreRol());
+			
+		}
+    	
+    		return usuarioForm;
+    }	
+	
+	public UsuarioForm insertaNuevoUsuario(UsuarioForm usuarioForm){
+		Rol rol = rolDAO.findById(usuarioForm.getUsuario().getRol().getIdRol());
+		Usuario usuario = usuarioForm.getUsuario();
+		usuario.setRol(rol);
+		usuarioDAO.save(usuario);
+		usuarioForm.setUsuario(usuario);
+		return usuarioForm;
+	}
+	
 }
