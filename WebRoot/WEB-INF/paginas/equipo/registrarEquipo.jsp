@@ -14,7 +14,7 @@
 <%@include file="../plantilla/encabezado.jsp" %> 
 <br />
 <!-- inicia va el contenido -->
-<div class="container">
+<div class="container">   
 	<h2 class="bg-primary text-center">Registro de  Equipo</h2>
   	<form:form method="post" action="${pageContext.request.contextPath}/equipo/confirmaregistrarequipo.html"   
   	modelAttribute="equipoForm" cssClass="form-horizontal" role="form">
