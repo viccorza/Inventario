@@ -75,7 +75,7 @@
 				<input type="submit"  class="btn btn-primary" value="Guardar" />
 			</div>
 			<div class="col-sm-3">
-				<a class="btn btn-warning" href="${pageContext.request.contextPath}/equipo/gestionarEquipo.html">Cancelar</a>
+				<a class="btn btn-warning" href="${pageContext.request.contextPath}/usuario/gestionarUsuario.html">Cancelar</a>
 			</div>
 	 	</div>
 	 </div>
