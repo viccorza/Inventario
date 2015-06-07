@@ -1,6 +1,7 @@
 package mcc.controlador;
 
-import mcc.controlador.form.EquipoForm;
+import mcc.controlador.form.UsuarioForm;
+import mcc.controlador.validador.UsuarioFormValidador;
 import mcc.data.RolDAO;
 import mcc.negocio.EquipoNegocio;
 import mcc.negocio.ReparacionNegocio;
@@ -9,6 +10,8 @@ import mcc.negocio.UsuarioNegocio;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class UsuarioControlador {
 	
 	private static final Logger log = Logger.getLogger(UsuarioControlador.class);
-	private static final String carpetaUsuario = "gestionusuarios";
 	
 	@Autowired
 	ReparacionNegocio reparacionNegocio;
@@ -36,38 +38,50 @@ public class UsuarioControlador {
 	
 	@Autowired
 	EquipoNegocio equipoNegocio;
-
+	
+	@Autowired
+	UsuarioFormValidador usuarioFormValidador; 
+	private static final String carpetaUsuario="usuario";
 	
 	
 	
-	@RequestMapping("listaUsuarios")
-	public ModelAndView listarUsuarios(){
-		log.debug("Entrando a listarUsuarios");
-		return new ModelAndView(carpetaUsuario+"/listaUsuario","param",1);
-	}
-	
-    /**
-     * Muestra la pantalla de gestionarUsuario
-     * @return
-     */
 	
 	@RequestMapping("gestionarUsuario")
-	public String gestionarUsuario(){
-		log.debug("Iniciando pagina de administracion de usuarios");
-		return carpetaUsuario+"/gestionarUsuario";
+	public ModelAndView listarUsuarios(){
+		log.debug("Entrando a listarUsuarios debug ");
+
+		return new ModelAndView(carpetaUsuario+"/gestionarUsuario","param",1);
 	}
 	
-	/**
-	 * Muestra la pantalla de registrar Usuario
-	 * @return
-	 */
 	@RequestMapping("registrarUsuario")
-	public String registrarUsuario(){
-		log.debug("Iniciando pagina de registrarUsuario");
-		//UsuarioForm usuarioForm = usuarioNegocio.iniciarPaginaRegistrarEquipo(new EquipoForm());
-		//return new ModelAndView(carpetaEquipo+"/registrarUsuario","equipoForm",equipoForm);
-		return carpetaUsuario+"/registrarUsuario";
+	public ModelAndView registrarUsuario(){
+		UsuarioForm usuarioForm = usuarioNegocio.iniciarPaginaRegistarUsuario(new UsuarioForm());
+		
+		return new ModelAndView(carpetaUsuario+"/registrarUsuario","usuarioForm",usuarioForm);
 	}
+    
+	@RequestMapping("confirmaregistrarusuario")
+	public ModelAndView confirmaregistrarusuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm,
+			BindingResult bindingResult){
+		log.debug(usuarioForm.getUsuario());
+		
+		usuarioFormValidador.validate(usuarioForm, bindingResult);
+		if(bindingResult.hasErrors()){
+			return new ModelAndView(carpetaUsuario+"/registrarUsuario","usuarioForm",usuarioForm);
 
+		}
+		else{
+		usuarioForm = usuarioNegocio.insertaNuevoUsuario(usuarioForm);
+		log.debug(usuarioForm.getUsuario());
+		return new ModelAndView(carpetaUsuario+"/gestionarUsuario","msg","Registro Exitoso , el id asignado es: " +usuarioForm.getUsuario().getIdUsuario());
+
+		}
+
+		
+	}
+	
+	
+	
+	
 
 }

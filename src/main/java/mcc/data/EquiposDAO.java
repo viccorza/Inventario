@@ -198,6 +198,7 @@ public class EquiposDAO extends BaseHibernateDAO {
 	public List<Equipos> buscarTodosPorResponsable(Integer idResponsable) {
 		log.debug("finding all Reparaciones instances");
 		try {
+			
 			return getSession().createCriteria(Equipos.class)
 					.add(Restrictions.eq("usuario.idUsuario", idResponsable))
 					.setFetchMode("estado", FetchMode.JOIN)

@@ -6,6 +6,8 @@ import mcc.beans.Usuario;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -30,13 +32,20 @@ public class UsuarioDAO extends BaseHibernateDAO {
 
 	public void save(Usuario transientInstance) {
 		log.debug("saving Usuario instance");
+		Session session = getSession();
+    	Transaction txt = session.beginTransaction();
 		try {
-			getSession().save(transientInstance);
+			session.save(transientInstance);
+			txt.commit();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			txt.rollback();
 			throw re;
 		}
+		finally {
+        	session.close();
+        }
 	}
 
 	public void delete(Usuario persistentInstance) {

@@ -69,4 +69,10 @@ public class Rol implements java.io.Serializable {
 		this.usuarios = usuarios;
 	}
 
+	@Override
+	public String toString() {
+		return "Rol [idRol=" + idRol + ", nombreRol=" + nombreRol
+				+ ", descripcion=" + descripcion + "]";
+	}
+
 }
