@@ -15,56 +15,64 @@
 <br />
 <!-- inicia va el contenido -->
 <div class="container">
-	<h2 class="bg-primary text-center">Registro de  Equipo</h2>
+	<h2 class="bg-primary text-center">Registro de  Usuario</h2>
   	<form:form method="post" action="${pageContext.request.contextPath}/usuario/confirmaregistrarusuario.html"   
-  	cssClass="form-horizontal" role="form">
+  	modelAttribute="usuarioForm" cssClass="form-horizontal" role="form">
 	<div class="row" >
 	    <div id="form-registra-equipo-izquierda" class="col-md-6">
 			<div class="form-group ">
-				<form:label path="usuarios.nombre" class="control-label col-md-3">Nombre* :
+				<form:label path="usuario.nombre" class="control-label col-md-3">Nombre * :
 				</form:label>
 				<div class="col-md-9">
-				    <form:input path="usuarios.nombre" class="form-control"  maxlength="40" />
-				 	<form:errors path="usuarios.nombre"  cssClass="text-danger pull-left" element="div"  />
+				    <form:input path="usuario.nombre" class="form-control"  maxlength="40" />
+				 	<form:errors path="usuario.nombre"  cssClass="text-danger pull-left" element="div"  />
 			    </div> 
 			</div> 
 			<div class="form-group ">
-	    		<form:label path="usuarios.apellido" class="control-label col-md-3">Apellido* :
+	    		<form:label path="usuario.apellido" class="control-label col-md-3">Apellido * :
 	    		</form:label>
 		    	<div class="col-md-9">
-		        	<form:input path="usuarios.apellido" class="form-control"  maxlength="40" />
-		        	<form:errors path="usuarios.apellido"  cssClass="text-danger pull-left" element="div"  />
+		        	<form:input path="usuario.apellido" class="form-control"  maxlength="40" />
+		        	<form:errors path="usuario.apellido"  cssClass="text-danger pull-left" element="div"  />
 		    	</div> 
 			</div> 
 			<div class="form-group ">
-	    		<form:label path="usuarios.telefono" class="control-label col-md-3">Teléfono*:
+	    		<form:label path="usuario.telefono" class="control-label col-md-3">Teléfono *:
 	    		</form:label>
 		    	<div class="col-md-9">
-		        	<form:input path="usuarios.telefono" class="form-control"  maxlength="40" />
-		        	<form:errors path="usuarios.telefono"  cssClass="text-danger pull-left" element="div"  />
+		        	<form:input path="usuario.telefono" class="form-control"  maxlength="40" />
+		        	<form:errors path="usuario.telefono"  cssClass="text-danger pull-left" element="div"  />
 		    	</div> 
 			</div> 
 			<div class="form-group ">
-				<form:label path="usuarios.email" class="control-label col-md-3">Email* :
+				<form:label path="usuario.email" class="control-label col-md-3">Email* :
 				</form:label>
 			<div class="col-md-9">
-			    <form:textarea  rows="6" path="usuarios.email" class="form-control"  maxlength="250" />
-			    <form:errors path="usuarios.email"  cssClass="text-danger pull-left" element="div"  />
+			    <form:textarea  rows="6" path="usuario.email" class="form-control"  maxlength="250" />
+			    <form:errors path="usuario.email"  cssClass="text-danger pull-left" element="div"  />
 			</div>
 			</div> 
 	
 	    </div> <!--  fin form-registra-equipo-izquierda -->
 	     <div id="form-registra-equipo-derecha" class="col-md-6">
+		    <div class="form-group ">
+				<form:label path="usuario.contrasena" class="control-label col-md-3">Email* :
+				</form:label>
+			<div class="col-md-9">
+			    <form:input  rows="6" path="usuario.contrasena" class="form-control"  maxlength="250" type="password"/>
+			    <form:errors path="usuario.contrasena"  cssClass="text-danger pull-left" element="div"  />
+			</div>
+			</div>
 		     <div class="form-group ">
-			        <form:label path="usuarios.rol.idRol" class="control-label col-sm-3">Estado* :
+			        <form:label path="usuario.rol.idRol" class="control-label col-sm-3">Tipo de Usuario * :
 			        </form:label>
 			        <div class="col-sm-4">
-			        <form:select path="usuarios.rol.idRol" items="${usuarioForm.rolMap}" />
+			        <form:select path="usuario.rol.idRol" items="${usuarioForm.tipoUsuarioMap}" />
 			        </div>
 			 </div>
-		</div> 
-	     </div><!-- fin form-registra-equipo-derecha -->
-    </div> <!-- fin row form -->
+		</div><!-- fin form-registra-equipo-derecha --> 
+	     </div> <!-- fin row form -->
+    </div> 
     
 	<div class="row">
 		<div class="form-group ">

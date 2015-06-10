@@ -2,8 +2,11 @@ package mcc.negocio;
 
 import java.util.List;
 
+import mcc.beans.Equipos;
+import mcc.beans.Estado;
 import mcc.beans.Rol;
 import mcc.beans.Usuario;
+import mcc.controlador.form.EquipoForm;
 import mcc.controlador.form.UsuarioForm;
 import mcc.data.EquiposDAO;
 import mcc.data.EstadoDAO;
@@ -57,6 +60,44 @@ public class UsuarioNegocio {
 		usuarioDAO.save(usuario);
 		usuarioForm.setUsuario(usuario);
 		return usuarioForm;
+	}
+	
+	/**
+	 * Busca un usuario por id
+	 * @param usuarioForm contenedor de informacion del equipo
+	 * @param idUsuario id del usuario a buscar
+	 * @return
+	 */
+	public UsuarioForm buscarUsuarioPorID(UsuarioForm usuarioForm,int idUsuario){
+		Usuario usuario = usuarioDAO.findById(idUsuario);
+
+		if(usuario==null){
+			usuarioForm.setEstatusBusqueda("NOTFOUND");
+
+		}
+		else
+		{
+			@SuppressWarnings("unchecked")
+			List<Rol> rolList = rolDAO.findAll();
+			for(Rol rol:rolList){
+				usuarioForm.getTipoUsuarioMap().put(rol.getIdRol(), rol.getNombreRol());
+				
+			}
+			
+			usuarioForm.setUsuario(usuario);
+		}
+		return usuarioForm;
+	}
+
+	/**
+	 * Confirma el borrado de un usuario
+	 * en la base de datos
+	 * @param equipoForm
+	 */
+	public void confirmaBorradoUsuario(UsuarioForm usuarioForm){
+		//Usuario usuario = usuarioDAO.loadById(usuarioForm.getUsuario().getIdUsuario());
+		Usuario usuario = usuarioDAO.findById(usuarioForm.getUsuario().getIdUsuario());
+		usuarioDAO.delete(usuario);
 	}
 	
 }

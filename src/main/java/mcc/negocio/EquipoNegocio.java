@@ -107,7 +107,7 @@ public class EquipoNegocio {
 
 	/**
 	 * Confirma el borrado de un equipo
-	 * en a base de datos
+	 * en la base de datos
 	 * @param equipoForm
 	 */
 	public void confirmaBorradoEquipo(EquipoForm equipoForm){

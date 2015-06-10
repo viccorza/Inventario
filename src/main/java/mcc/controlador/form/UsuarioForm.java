@@ -9,13 +9,14 @@ public class UsuarioForm {
 	
 	private Usuario usuario;
 	private Map<Integer,String> tipoUsuarioMap;
+	private String estatusBusqueda;
 	
 	public UsuarioForm(){
 		usuario = new Usuario();
 		tipoUsuarioMap= new HashMap<Integer,String>();
 		
 	}
-
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -30,5 +31,13 @@ public class UsuarioForm {
 
 	public void setTipoUsuarioMap(Map<Integer, String> tipoUsuarioMap) {
 		this.tipoUsuarioMap = tipoUsuarioMap;
+	}
+
+	public String getEstatusBusqueda() {
+		return estatusBusqueda;
+	}
+
+	public void setEstatusBusqueda(String estatusBusqueda) {
+		this.estatusBusqueda = estatusBusqueda;
 	}
 }

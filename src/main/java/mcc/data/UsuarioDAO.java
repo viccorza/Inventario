@@ -2,6 +2,7 @@ package mcc.data;
 
 import java.util.List;
 
+import mcc.beans.Equipos;
 import mcc.beans.Usuario;
 
 import org.hibernate.LockOptions;
@@ -50,11 +51,15 @@ public class UsuarioDAO extends BaseHibernateDAO {
 
 	public void delete(Usuario persistentInstance) {
 		log.debug("deleting Usuario instance");
+		Session session = getSession();
+		Transaction txt = session.beginTransaction();
 		try {
 			getSession().delete(persistentInstance);
+			txt.commit();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
+			txt.rollback();
 			throw re;
 		}
 	}
@@ -63,6 +68,18 @@ public class UsuarioDAO extends BaseHibernateDAO {
 		log.debug("getting Usuario instance with id: " + id);
 		try {
 			Usuario instance = (Usuario) getSession().get("mcc.beans.Usuario",
+					id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	public Usuario loadById(java.lang.Integer id) {
+		log.debug("loading Usuarios instance with id: " + id);
+		try {
+			Usuario instance = (Usuario) getSession().load(Usuario.class,
 					id);
 			return instance;
 		} catch (RuntimeException re) {

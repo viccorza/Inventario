@@ -27,7 +27,9 @@ public class UsuarioFormValidador implements Validator {
 		log.debug("Entrando al validador de Equipos");
 		UsuarioForm usuarioForm = (UsuarioForm)target;
 		ValidationUtils.rejectIfEmpty(errors, "usuario.nombre", "errorCode",valorRequerido);
-
+		ValidationUtils.rejectIfEmpty(errors, "usuario.apellido", "errorCode",valorRequerido);
+		ValidationUtils.rejectIfEmpty(errors, "usuario.telefono", "errorCode",valorRequerido);
+		ValidationUtils.rejectIfEmpty(errors, "usuario.email", "errorCode",valorRequerido);
 	}
 
 }

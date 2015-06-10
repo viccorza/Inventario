@@ -1,8 +1,9 @@
 package mcc.controlador;
 
+
+import mcc.controlador.form.EquipoForm;
 import mcc.controlador.form.UsuarioForm;
 import mcc.controlador.validador.UsuarioFormValidador;
-import mcc.data.RolDAO;
 import mcc.negocio.EquipoNegocio;
 import mcc.negocio.ReparacionNegocio;
 import mcc.negocio.UsuarioNegocio;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -41,14 +43,14 @@ public class UsuarioControlador {
 	
 	@Autowired
 	UsuarioFormValidador usuarioFormValidador; 
-	private static final String carpetaUsuario="usuario";
+	private static final String carpetaUsuario="gestionusuarios";
 	
 	
 	
 	
 	@RequestMapping("gestionarUsuario")
 	public ModelAndView listarUsuarios(){
-		log.debug("Entrando a listarUsuarios debug ");
+		log.debug("Entrando a gestionar usuarios debug ");
 
 		return new ModelAndView(carpetaUsuario+"/gestionarUsuario","param",1);
 	}
@@ -57,7 +59,7 @@ public class UsuarioControlador {
 	public ModelAndView registrarUsuario(){
 		UsuarioForm usuarioForm = usuarioNegocio.iniciarPaginaRegistarUsuario(new UsuarioForm());
 		
-		return new ModelAndView(carpetaUsuario+"/registrarUsuario","usuarioForm",usuarioForm);
+		return new ModelAndView(carpetaUsuario+"/registroUsuario","usuarioForm",usuarioForm);
 	}
     
 	@RequestMapping("confirmaregistrarusuario")
@@ -67,7 +69,7 @@ public class UsuarioControlador {
 		
 		usuarioFormValidador.validate(usuarioForm, bindingResult);
 		if(bindingResult.hasErrors()){
-			return new ModelAndView(carpetaUsuario+"/registrarUsuario","usuarioForm",usuarioForm);
+			return new ModelAndView(carpetaUsuario+"/registroUsuario","usuarioForm",usuarioForm);
 
 		}
 		else{
@@ -80,7 +82,99 @@ public class UsuarioControlador {
 		
 	}
 	
+	/**
+	 * Muestra la pantalla de eliminar usuario
+	 * @return
+	 */
+	@RequestMapping("eliminarUsuario")
+	public ModelAndView eliminarEquipo(){
+		log.debug("Iniciando página eliminarUsuario");
+		UsuarioForm usuarioForm = usuarioNegocio.iniciarPaginaRegistarUsuario(new UsuarioForm());
+		usuarioForm.setUsuario(null);
+		return new ModelAndView(carpetaUsuario+"/eliminarUsuario","usuarioForm",usuarioForm);
+	}
 	
+	/**
+	 * Realiza la busqueda de un 
+	 * equipo por ID para la pagina de eliminar
+	 * @param idEquipo
+	 * @return
+	 */
+	@RequestMapping("buscarUsuarioPorIdParaEliminar")
+	public ModelAndView buscarUsuarioPorIdParaEliminar(@RequestParam("idUsuario")String idUsuario){
+		int idUsuarioInt =0;
+		UsuarioForm usuarioForm = new UsuarioForm();
+		usuarioForm.setUsuario(null);
+		try{
+			 idUsuarioInt =Integer.parseInt(idUsuario);
+		}
+		catch(NumberFormatException ex){
+			usuarioForm.setEstatusBusqueda("NOTVALIDKEY");
+			return new ModelAndView(carpetaUsuario+"/eliminarUsuario","usuarioForm",usuarioForm);
+
+		}
+		if(idUsuario!=null && !idUsuario.trim().isEmpty() && idUsuarioInt !=0){
+			 usuarioForm = usuarioNegocio.buscarUsuarioPorID(new UsuarioForm(), idUsuarioInt);
+				return new ModelAndView(carpetaUsuario+"/eliminarUsuario","usuarioForm",usuarioForm);
+			
+		}
+		usuarioForm.setEstatusBusqueda("NOTFOUND");
+		usuarioForm.setUsuario(null);
+		return new ModelAndView(carpetaUsuario+"/eliminarUsuario","usuarioForm",usuarioForm);
+
+	}
+	/**
+	 * confirma el borrado de un usuario
+	 * @param usuarioForm contenedor de la informacion de usuario
+	 * @return
+	 */
+	@RequestMapping("confirmaBorradoUsuario")
+	public ModelAndView confirmaBorradoUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm)
+	{
+		usuarioNegocio.confirmaBorradoUsuario(usuarioForm);
+		return new ModelAndView(carpetaUsuario+"/gestionarUsuario","msg","El registro con id: "+ usuarioForm.getUsuario().getIdUsuario()+" ha sido borrado");
+
+	}
+	
+	/**
+	 * Muestra la pantalla de consultar equipo
+	 * @return
+	 */
+
+	@RequestMapping("consultarUsuario")
+	public String consultarUsuario(){
+		log.debug("Iniciando pagina de consultarUsuario");
+		return carpetaUsuario+"/consultarUsuario";
+	}
+	
+	/**
+	 * Realiza la busqueda de un 
+	 * usuario por ID
+	 * @param idUsuario
+	 * @return
+	 */
+	@RequestMapping("buscarUsuarioPorIdParaConsultar")
+	public ModelAndView buscarUsuarioPorIdParaConsultar(@RequestParam("idUsuario")String idUsuario){
+		int idUsuarioInt =0;
+		UsuarioForm usuarioForm = new UsuarioForm();
+		usuarioForm.setUsuario(null);
+		try{
+			 idUsuarioInt =Integer.parseInt(idUsuario);
+		}
+		catch(NumberFormatException ex){
+			usuarioForm.setEstatusBusqueda("NOTVALIDKEY");
+			return new ModelAndView(carpetaUsuario+"/consultarUsuario","usuarioForm",usuarioForm);
+
+		}
+		if(idUsuario!=null && !idUsuario.trim().isEmpty() && idUsuarioInt !=0){
+			usuarioForm =  usuarioNegocio.buscarUsuarioPorID(new UsuarioForm(), idUsuarioInt);
+				return new ModelAndView(carpetaUsuario+"/consultarUsuario","usuarioForm",usuarioForm);
+			
+		}
+		usuarioForm.setEstatusBusqueda("NOTFOUND");
+		return new ModelAndView(carpetaUsuario+"/consultarUsuario","usuarioForm",usuarioForm);
+
+	}
 	
 	
 
